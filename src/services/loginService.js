@@ -1,8 +1,10 @@
 const { User } = require('../database/models');
+const { generateJWTToken } = require('../utils/validateToken');
+const { messageErrorMissingFields, messageErrorInvalidFields } = require('../utils/messages');
 
 const authenticationLogin = async ({ email, password }) => {
     if (!email || !password) {
-        return { message: 'Some required fields are missing' };
+        throw messageErrorMissingFields;
     }
 
     const userLogin = await User.findOne({
@@ -11,12 +13,12 @@ const authenticationLogin = async ({ email, password }) => {
     });
 
     if (!userLogin) {
-        return { message: 'Invalid fields' };
+        throw messageErrorInvalidFields;
     }
 
-    // // Gerar o token
-    // const token = generateJWTToken(student.dataValues);
-    // return { token };
+    // Gerar o token
+    const token = generateJWTToken(userLogin.dataValues);
+    return { token };
 };
 
 module.exports = {
