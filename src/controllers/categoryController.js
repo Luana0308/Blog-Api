@@ -16,4 +16,9 @@ authRouter.post('/', authToken, async (req, res) => {
     res.status(201).json(newCategory);
 });
 
+authRouter.get('/', authToken, async (req, res) => {
+    const categories = await categoryService.getAllCategories();
+    res.status(200).json(categories);
+});
+
 module.exports = authRouter;
