@@ -22,4 +22,10 @@ authRouter.get('/', authToken, async (req, res) => {
     res.status(200).json(users);
 });
 
+authRouter.get('/:id', authToken, async (req, res) => {
+    const { id } = req.params;
+    const userId = await userService.getUserId(id);
+    res.status(200).json(userId);
+});
+
 module.exports = authRouter;

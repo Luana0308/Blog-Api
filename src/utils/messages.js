@@ -8,6 +8,7 @@ const messageErrorPassword = { status: 400,
     message: '"password" length must be at least 6 characters long' };
 const messageErrorToken = { status: 401, message: 'Token not found' };
 const messageErrorTokenInvalid = { status: 401, message: 'Expired or invalid token' };
+const messageErrorUserNotExist = { status: 404, message: 'User does not exist' };
 
 module.exports = {
     messageErrorMissingFields,
@@ -18,4 +19,5 @@ module.exports = {
     messageErrorPassword,
     messageErrorToken,
     messageErrorTokenInvalid,
+    messageErrorUserNotExist,
 };

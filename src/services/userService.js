@@ -1,5 +1,5 @@
 const { User } = require('../database/models');
-const { messageErrorUserExist } = require('../utils/messages');
+const { messageErrorUserExist, messageErrorUserNotExist } = require('../utils/messages');
 const { generateJWTToken } = require('../utils/validateToken');
 
 const createUser = async ({ id, displayName, email, password, image }) => {
@@ -25,7 +25,19 @@ const getAllUsers = async () => {
     return users;
 };
 
+const getUserId = async (id) => {
+    const user = await User.findByPk(id, {
+        attributes: ['id', 'displayName', 'email', 'image'],
+    });
+
+    if (!user) {
+        throw messageErrorUserNotExist;
+    }
+    return user;
+};
+
 module.exports = {
     createUser,
     getAllUsers,
+    getUserId,
 };
