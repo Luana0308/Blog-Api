@@ -6,6 +6,8 @@ const messageErrorNameFail = { status: 400,
 const messageErrorEmailInvalid = { status: 400, message: '"email" must be a valid email' };
 const messageErrorPassword = { status: 400, 
     message: '"password" length must be at least 6 characters long' };
+const messageErrorToken = { status: 401, message: 'Token not found' };
+const messageErrorTokenInvalid = { status: 401, message: 'Expired or invalid token' };
 
 module.exports = {
     messageErrorMissingFields,
@@ -14,4 +16,6 @@ module.exports = {
     messageErrorNameFail,
     messageErrorEmailInvalid,
     messageErrorPassword,
+    messageErrorToken,
+    messageErrorTokenInvalid,
 };
