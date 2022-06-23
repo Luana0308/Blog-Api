@@ -1,19 +1,29 @@
-const { BlogPost, User, Category } = require('../database/models');
-const { messageErrorMissingFields } = require('../utils/messages');
+const Sequelize = require('sequelize');
 
-const createPost = async (info, id) => {
-    const { title, content, categoryIds } = info;
-    if (!title || !content || !categoryIds) {
-        throw messageErrorMissingFields;
+const config = require('../database/config/config');
+
+const sequelize = new Sequelize(config.development);
+const { BlogPost, User, Category } = require('../database/models');
+const { messageErrorMissingFields, messageErrorCategoryNotFound } = require('../utils/messages');
+
+const createPost = async ({ title, content, categoryIds }, id) => {
+    if (!title || !content || !categoryIds) { throw messageErrorMissingFields; }
+    try {
+        const result = await sequelize.transaction(async (t) => {
+            const blogPostCreate = await BlogPost.create({
+                title, 
+                content, 
+                userId: id, 
+                updated: new Date(),
+                published: new Date(),
+            }, { transaction: t });
+            await blogPostCreate.addCategories(categoryIds, { transaction: t });
+            return blogPostCreate;
+          });
+        return result;
+    } catch (error) {
+         throw messageErrorCategoryNotFound;
     }
-    const createPostBlog = await BlogPost.create({
-        title, 
-        content, 
-        userId: id, 
-        updated: new Date(),
-        published: new Date(),
-    });
-    return createPostBlog;
 };
 
 const getAllPosts = () => {
