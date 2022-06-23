@@ -13,6 +13,7 @@ const messageErrorTokenInvalid = { status: 401, message: 'Expired or invalid tok
 const messageErrorUserNotExist = { status: 404, message: 'User does not exist' };
 const messageErrorCategory = { status: 400, message: '"name" is required' };
 const messageErrorCategoryNotFound = { status: 400, message: '"categoryIds" not found' };
+const messageErrorPostInvalid = { status: 404, message: 'Post does not exist' };
 
 module.exports = {
     messageErrorMissingFields,
@@ -26,4 +27,5 @@ module.exports = {
     messageErrorUserNotExist,
     messageErrorCategory,
     messageErrorCategoryNotFound,
+    messageErrorPostInvalid,
 };

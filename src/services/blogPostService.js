@@ -4,7 +4,9 @@ const config = require('../database/config/config');
 
 const sequelize = new Sequelize(config.development);
 const { BlogPost, User, Category } = require('../database/models');
-const { messageErrorMissingFields, messageErrorCategoryNotFound } = require('../utils/messages');
+const { messageErrorMissingFields, 
+        messageErrorCategoryNotFound, 
+        messageErrorPostInvalid } = require('../utils/messages');
 
 const createPost = async ({ title, content, categoryIds }, id) => {
     if (!title || !content || !categoryIds) { throw messageErrorMissingFields; }
@@ -36,13 +38,18 @@ const getAllPosts = () => {
     return getPosts;
 };
 
-const getPostById = (id) => {
-    const postId = BlogPost.findByPk(id, {
+const getPostById = async (id) => {    
+    const postId = await BlogPost.findByPk(id, {
         include: [
             { model: User, as: 'user', attributes: { exclude: ['password'] } },
             { model: Category, as: 'categories', through: { attributes: [] } },
         ],
-});
+    });
+
+    if (!postId) {
+        throw messageErrorPostInvalid;
+    }
+
     return postId;
 };
 
