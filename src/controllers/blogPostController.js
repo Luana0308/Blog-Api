@@ -33,4 +33,18 @@ blogPostRouter.delete('/:id', authToken, async (req, res) => {
     res.status(204).send();
 });
 
+blogPostRouter.get('/search', authToken, async (req, res) => {
+    const { q } = req.query;
+
+    if (!q) {
+        const getAllPosts = await blogPostService.getAllPosts();
+        res.status(200).json(getAllPosts);
+    }
+
+    const searchPost = await blogPostService.getSearchPost(q);
+    res.status(200).json(searchPost);
+});
+
 module.exports = blogPostRouter;
+
+// https://pt.stackoverflow.com/questions/355872/como-utilizar-o-like-do-sql-no-sequelize

@@ -1,5 +1,7 @@
 const Sequelize = require('sequelize');
 
+const { Op } = Sequelize;
+
 const config = require('../database/config/config');
 
 const sequelize = new Sequelize(config.development);
@@ -88,10 +90,31 @@ const deletePostId = async (tokenId, params) => {
     await BlogPost.destroy({ where: { id } });
 };
 
+const getSearchPost = async (q) => {
+    const getSearch = await BlogPost.findAll({
+        where: {
+            [Op.or]: [{
+                title: { [Op.like]: `%${q}%` },
+                content: { [Op.like]: `%${q}%` },
+            }],
+        },
+        
+            include: [
+                { model: User, as: 'user', attributes: { exclude: ['password'] } },
+                { model: Category, as: 'categories', through: { attributes: [] } },
+            ],
+        
+    });
+    return getSearch;
+};
+
 module.exports = {
     createPost,
     getAllPosts,
     getPostById,
     updatePostId,
     deletePostId,
+    getSearchPost,
 };
+
+// https://sequelize.org/docs/v6/core-concepts/model-querying-basics/#operators
