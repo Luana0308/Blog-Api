@@ -10,7 +10,7 @@ const PostCategoryShema = (sequelize, DataTypes) => {
     PostCategoryTable.associate = (models) => {
 
         models.BlogPost.belongsToMany(models.Category, {
-            as: 'category',
+            as: 'categories',
             through: PostCategoryTable,
             foreignKey: 'postId',
             otherKey: 'categoryId',

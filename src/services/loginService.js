@@ -8,7 +8,7 @@ const authenticationLogin = async ({ email, password }) => {
     }
 
     const userLogin = await User.findOne({
-        attributes: ['id', 'displayName', 'email', 'password', 'image'],
+        attributes: ['id', 'displayName', 'email'],
         where: { email, password },
     });
 
@@ -18,6 +18,7 @@ const authenticationLogin = async ({ email, password }) => {
 
     // Gerar o token
     const token = generateJWTToken(userLogin.dataValues);
+    console.log(userLogin.dataValues);
     return { token };
 };
 

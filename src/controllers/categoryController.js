@@ -3,9 +3,9 @@ const { authToken } = require('../middlewares/authToken');
 const categoryService = require('../services/categoryService');
 const { messageErrorCategory } = require('../utils/messages');
 
-const authRouter = express.Router();
+const categoryRouter = express.Router();
 
-authRouter.post('/', authToken, async (req, res) => {
+categoryRouter.post('/', authToken, async (req, res) => {
     const { name } = req.body;
 
     if (!name) {
@@ -16,9 +16,9 @@ authRouter.post('/', authToken, async (req, res) => {
     res.status(201).json(newCategory);
 });
 
-authRouter.get('/', authToken, async (req, res) => {
+categoryRouter.get('/', authToken, async (req, res) => {
     const categories = await categoryService.getAllCategories();
     res.status(200).json(categories);
 });
 
-module.exports = authRouter;
+module.exports = categoryRouter;

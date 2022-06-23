@@ -4,11 +4,11 @@ const { validateName } = require('../middlewares/validateName');
 const { validatePassword } = require('../middlewares/validatePassword');
 const { authToken } = require('../middlewares/authToken');
 
-const authRouter = express.Router();
+const userRouter = express.Router();
 
 const userService = require('../services/userService');
 
-authRouter.post('/', 
+userRouter.post('/', 
     validateName, 
     validateEmail,
     validatePassword, 
@@ -17,15 +17,15 @@ authRouter.post('/',
         res.status(201).json(tokenNewUser);
 });
 
-authRouter.get('/', authToken, async (req, res) => {
+userRouter.get('/', authToken, async (req, res) => {
     const users = await userService.getAllUsers();
     res.status(200).json(users);
 });
 
-authRouter.get('/:id', authToken, async (req, res) => {
+userRouter.get('/:id', authToken, async (req, res) => {
     const { id } = req.params;
     const userId = await userService.getUserId(id);
     res.status(200).json(userId);
 });
 
-module.exports = authRouter;
+module.exports = userRouter;

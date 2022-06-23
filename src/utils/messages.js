@@ -11,7 +11,7 @@ const messageErrorPassword = { status: 400,
 const messageErrorToken = { status: 401, message: 'Token not found' };
 const messageErrorTokenInvalid = { status: 401, message: 'Expired or invalid token' };
 const messageErrorUserNotExist = { status: 404, message: 'User does not exist' };
-const messageErrorCategory = { status: 400, message: '"name" is required' };
+const messageErrorCategoryNotFound = { status: 400, message: '"categoryIds" not found' };
 
 module.exports = {
     messageErrorMissingFields,
@@ -23,5 +23,5 @@ module.exports = {
     messageErrorToken,
     messageErrorTokenInvalid,
     messageErrorUserNotExist,
-    messageErrorCategory,
+    messageErrorCategoryNotFound,
 };
