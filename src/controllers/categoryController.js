@@ -7,10 +7,8 @@ const categoryRouter = express.Router();
 
 categoryRouter.post('/', authToken, async (req, res) => {
     const { name } = req.body;
-    console.log(name);
 
     if (!name) {
-        console.log('entrou no if');
         throw messageErrorCategory;
     }
 
@@ -18,9 +16,9 @@ categoryRouter.post('/', authToken, async (req, res) => {
     res.status(201).json(newCategory);
 });
 
-// categoryRouter.get('/', authToken, async (req, res) => {
-//     const categories = await categoryService.getAllCategories();
-//     res.status(200).json(categories);
-// });
+categoryRouter.get('/', authToken, async (req, res) => {
+    const categories = await categoryService.getAllCategories();
+    res.status(200).json(categories);
+});
 
 module.exports = categoryRouter;
