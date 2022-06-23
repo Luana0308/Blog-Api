@@ -28,4 +28,9 @@ userRouter.get('/:id', authToken, async (req, res) => {
     res.status(200).json(userId);
 });
 
+userRouter.delete('/me', authToken, async (_req, res) => {
+     await userService.deleteUser(res.locals.payload);
+    res.status(204).end();
+});
+
 module.exports = userRouter;

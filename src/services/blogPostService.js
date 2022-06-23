@@ -78,8 +78,6 @@ const updatePostId = async (tokenId, body, params) => {
 
 const deletePostId = async (tokenId, params) => {
     const { id } = params;
-    // if (!id) throw messageErrorNotPost;
-
      const verifyUserUpdate = await BlogPost.findOne({
         attributes: ['userId'],
         where: { id },
