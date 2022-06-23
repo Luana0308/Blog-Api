@@ -14,6 +14,7 @@ const messageErrorUserNotExist = { status: 404, message: 'User does not exist' }
 const messageErrorCategory = { status: 400, message: '"name" is required' };
 const messageErrorCategoryNotFound = { status: 400, message: '"categoryIds" not found' };
 const messageErrorPostInvalid = { status: 404, message: 'Post does not exist' };
+const messageErrorInvalidUser = { status: 401, message: 'Unauthorized user' };
 
 module.exports = {
     messageErrorMissingFields,
@@ -28,4 +29,5 @@ module.exports = {
     messageErrorCategory,
     messageErrorCategoryNotFound,
     messageErrorPostInvalid,
+    messageErrorInvalidUser,
 };

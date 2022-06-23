@@ -21,4 +21,11 @@ blogPostRouter.get('/:id', authToken, async (req, res) => {
     res.status(200).json(getPostById);
 });
 
+blogPostRouter.put('/:id', authToken, async (req, res) => {
+    // const { id } = req.params;
+    const { id } = res.locals.payload;
+    const updatedPost = await blogPostService.updatePostId(id, req.body, req.params);
+    res.status(200).json(updatedPost);
+});
+
 module.exports = blogPostRouter;
