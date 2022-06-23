@@ -7,6 +7,7 @@ const { BlogPost, User, Category } = require('../database/models');
 const { messageErrorMissingFields, 
         messageErrorCategoryNotFound,
         messageErrorInvalidUser, 
+        messageErrorNotPost,
         messageErrorPostInvalid } = require('../utils/messages');
 
 const createPost = async ({ title, content, categoryIds }, id) => {
@@ -75,9 +76,24 @@ const updatePostId = async (tokenId, body, params) => {
     return getPostById(id);
 };
 
+const deletePostId = async (tokenId, params) => {
+    const { id } = params;
+    // if (!id) throw messageErrorNotPost;
+
+     const verifyUserUpdate = await BlogPost.findOne({
+        attributes: ['userId'],
+        where: { id },
+    });
+        if (!verifyUserUpdate) throw messageErrorNotPost;
+        if (verifyUserUpdate.userId !== tokenId) throw messageErrorInvalidUser;
+
+    await BlogPost.destroy({ where: { id } });
+};
+
 module.exports = {
     createPost,
     getAllPosts,
     getPostById,
     updatePostId,
+    deletePostId,
 };

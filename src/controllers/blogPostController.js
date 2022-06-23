@@ -22,10 +22,15 @@ blogPostRouter.get('/:id', authToken, async (req, res) => {
 });
 
 blogPostRouter.put('/:id', authToken, async (req, res) => {
-    // const { id } = req.params;
     const { id } = res.locals.payload;
     const updatedPost = await blogPostService.updatePostId(id, req.body, req.params);
     res.status(200).json(updatedPost);
+});
+
+blogPostRouter.delete('/:id', authToken, async (req, res) => {
+    const { id } = res.locals.payload;
+     await blogPostService.deletePostId(id, req.params);
+    res.status(204).send();
 });
 
 module.exports = blogPostRouter;
