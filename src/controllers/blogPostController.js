@@ -15,4 +15,10 @@ blogPostRouter.get('/', authToken, async (req, res) => {
     res.status(200).json(getAllPosts);
 });
 
+blogPostRouter.get('/:id', authToken, async (req, res) => {
+    const { id } = req.params;
+    const getPostById = await blogPostService.getPostById(id);
+    res.status(200).json(getPostById);
+});
+
 module.exports = blogPostRouter;

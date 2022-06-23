@@ -36,7 +36,18 @@ const getAllPosts = () => {
     return getPosts;
 };
 
+const getPostById = (id) => {
+    const postId = BlogPost.findByPk(id, {
+        include: [
+            { model: User, as: 'user', attributes: { exclude: ['password'] } },
+            { model: Category, as: 'categories', through: { attributes: [] } },
+        ],
+});
+    return postId;
+};
+
 module.exports = {
     createPost,
     getAllPosts,
+    getPostById,
 };
