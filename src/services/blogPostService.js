@@ -91,20 +91,21 @@ const deletePostId = async (tokenId, params) => {
 };
 
 const getSearchPost = async (q) => {
+    console.log('a letra q aqui', q);
     const getSearch = await BlogPost.findAll({
         where: {
             [Op.or]: [{
-                title: { [Op.like]: `%${q}%` },
-                content: { [Op.like]: `%${q}%` },
+                title: { [Op.like]: `%${q}%` } },
+                { content: { [Op.like]: `%${q}%` },
             }],
         },
-        
             include: [
                 { model: User, as: 'user', attributes: { exclude: ['password'] } },
                 { model: Category, as: 'categories', through: { attributes: [] } },
             ],
         
     });
+    console.log('éntrou na funcao get', getSearch);
     return getSearch;
 };
 

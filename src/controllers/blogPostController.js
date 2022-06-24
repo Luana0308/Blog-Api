@@ -15,6 +15,18 @@ blogPostRouter.get('/', authToken, async (req, res) => {
     res.status(200).json(getAllPosts);
 });
 
+blogPostRouter.get('/search', authToken, async (req, res) => {
+    const { q } = req.query;
+
+    if (!q) {
+        const getAllPosts = await blogPostService.getAllPosts();
+        res.status(200).json(getAllPosts);
+    }
+
+    const searchPost = await blogPostService.getSearchPost(q);
+    res.status(200).json(searchPost);
+});
+
 blogPostRouter.get('/:id', authToken, async (req, res) => {
     const { id } = req.params;
     const getPostById = await blogPostService.getPostById(id);
@@ -31,18 +43,6 @@ blogPostRouter.delete('/:id', authToken, async (req, res) => {
     const { id } = res.locals.payload;
      await blogPostService.deletePostId(id, req.params);
     res.status(204).send();
-});
-
-blogPostRouter.get('/search', authToken, async (req, res) => {
-    const { q } = req.query;
-
-    if (!q) {
-        const getAllPosts = await blogPostService.getAllPosts();
-        res.status(200).json(getAllPosts);
-    }
-
-    const searchPost = await blogPostService.getSearchPost(q);
-    res.status(200).json(searchPost);
 });
 
 module.exports = blogPostRouter;
